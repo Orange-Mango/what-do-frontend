@@ -1,22 +1,22 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import {
   Card,
   CardActions,
   CardContent,
   Button,
   Typography
-} from '@material-ui/core';
+} from "@material-ui/core";
 
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
-    width: '30%'
+    width: "30%"
   },
   bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)'
+    display: "inline-block",
+    margin: "0 2px",
+    transform: "scale(0.8)"
   },
   title: {
     fontSize: 14
@@ -26,26 +26,27 @@ const useStyles = makeStyles({
   }
 });
 
-const Activity = ({ activity, removeActivity }) => {
+const Activity = ({ activity, removeActivity, likeActivity, tags }) => {
   const classes = useStyles();
   return (
     <Card className={classes.root}>
       <CardContent>
         <Typography
           className={classes.title}
-          color='textSecondary'
+          color="textSecondary"
           gutterBottom
         >
-          Category {activity.key}
+          Category {activity.key}{" "}
+          {activity.tags && activity.tags.map(tag => tag).join(" ")}
         </Typography>
 
-        <Typography variant='body2' component='p'>
+        <Typography variant="body2" component="p">
           {activity.description}
         </Typography>
       </CardContent>
       <CardActions>
         <Button onClick={() => removeActivity(activity.key)}>❌</Button>
-        <Button>❤️</Button>
+        <Button onClick={() => likeActivity(activity.key)}>❤️</Button>
       </CardActions>
     </Card>
   );

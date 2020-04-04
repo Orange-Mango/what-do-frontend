@@ -1,34 +1,53 @@
-import React, { useState } from "react";
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import {
+  Card,
+  CardActions,
+  CardContent,
+  Button,
+  Typography,
+} from "@material-ui/core";
 
-const Activity = ({ index, removeActivity }) => {
+const useStyles = makeStyles({
+  root: {
+    minWidth: 275,
+    width: "30%",
+  },
+  bullet: {
+    display: "inline-block",
+    margin: "0 2px",
+    transform: "scale(0.8)",
+  },
+  title: {
+    fontSize: 14,
+  },
+  pos: {
+    marginBottom: 12,
+  },
+});
+
+const Activity = ({ activity, index, removeActivity }) => {
+  const classes = useStyles();
   return (
-    <div
-      style={{
-        transform: `translateY(${index * 10}px)`,
-        border: "1px solid grey",
-      }}
-      className={`absolute max-w-sm rounded overflow-hidden shadow-lg bg-white z-${index} ml-8 mt-8`}
-    >
-      <div className="px-6 py-4">
-        <div className="font-bold text-purple-500 text-xl mb-2">Excercise</div>
-        <p className="text-gray-700 text-base">
-          Just lift some weights or something, idk.
-        </p>
-      </div>
-      <div className="px-6 py-4">
-        <span
-          onClick={() => {
-            removeActivity(index);
-          }}
-          className="inline-block bg-red-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2"
+    <Card className={classes.root}>
+      <CardContent>
+        <Typography
+          className={classes.title}
+          color="textSecondary"
+          gutterBottom
         >
-          x
-        </span>
-        <span className="inline-block bg-green-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
-          ✓
-        </span>
-      </div>
-    </div>
+          Category
+        </Typography>
+
+        <Typography variant="body2" component="p">
+          {activity && activity.description}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Button onClick={() => removeActivity(index)}>❌</Button>
+        <Button>❤️</Button>
+      </CardActions>
+    </Card>
   );
 };
 

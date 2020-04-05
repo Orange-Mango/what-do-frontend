@@ -65,15 +65,17 @@ const AddActivity = ({ handleAddActivity, tags }) => {
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
-        <ActivityForm
-          tags={tags}
-          activity={activity}
-          setActivity={setActivity}
-          selectedTags={selectedTags}
-          handleSubmit={handleSubmit}
-          handleDelete={handleDelete}
-          handleAddTag={handleAddTag}
-        />
+        <div>
+          <ActivityForm
+            tags={tags}
+            activity={activity}
+            setActivity={setActivity}
+            selectedTags={selectedTags}
+            handleSubmit={handleSubmit}
+            handleDelete={handleDelete}
+            handleAddTag={handleAddTag}
+          />
+        </div>
       </Modal>
     </div>
   );

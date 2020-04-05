@@ -8,11 +8,7 @@ import AddActivity from "./AddActivity/AddActivity";
 import { client } from "../utils/api-client";
 
 const Activities = () => {
-  const [activities, setActivities] = useState([
-    { key: 0, description: "a", tags: [{ key: 0, label: "HEALTH" }] },
-    { key: 1, description: "b", tags: [{ key: 1, label: "FOOD" }] },
-    { key: 2, description: "c", tags: [{ key: 2, label: "LEARNING" }] },
-  ]);
+  const [activities, setActivities] = useState([]);
   const [tags, setTags] = useState([
     { key: 0, label: "HEALTH" },
     { key: 1, label: "FOOD" },
@@ -52,7 +48,7 @@ const Activities = () => {
   const handleAddActivity = (activity, tags) => {
     setIndex(index + 1);
     let newActivities = [...activities];
-    let newActivity = { key: index, description: activity, tags };
+    let newActivity = { description: activity, tags };
     newActivities.push(newActivity);
     client("activities", { body: newActivity });
     setActivities(newActivities);

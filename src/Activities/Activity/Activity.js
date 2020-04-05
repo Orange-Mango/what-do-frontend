@@ -4,7 +4,6 @@ import {
   Card,
   CardActions,
   CardContent,
-  CardHeader,
   Chip,
   Button,
   Grid,
@@ -20,11 +19,10 @@ const useStyles = makeStyles({
   },
 });
 
-const Activity = ({ key, props, activity, removeActivity, likeActivity }) => {
+const Activity = ({ props, activity, removeActivity, likeActivity }) => {
   const classes = useStyles();
   return (
     <animated.div
-      key={key}
       style={{
         ...props,
         position: "absolute",
@@ -49,8 +47,16 @@ const Activity = ({ key, props, activity, removeActivity, likeActivity }) => {
           </CardContent>
           <CardActions>
             <Grid container direction="row" justify="space-between">
-              <Button onClick={() => removeActivity(activity.key)}>❌</Button>
-              <Button onClick={() => likeActivity(activity.key)}>❤️</Button>
+              <Button onClick={() => removeActivity(activity.key)}>
+                <span role="img" aria-label="dislike">
+                  ❌
+                </span>
+              </Button>
+              <Button onClick={() => likeActivity(activity.key)}>
+                <span role="img" aria-label="like">
+                  ❤️
+                </span>
+              </Button>
             </Grid>
           </CardActions>
         </Card>

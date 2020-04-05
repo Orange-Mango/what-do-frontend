@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { Button, Container, Grid } from "@material-ui/core";
+import { Container, Grid } from "@material-ui/core";
 import { useTransition } from "react-spring";
 
 import Activity from "./Activity/Activity";
 import storage from "../utils/storage";
+import AddActivity from "./AddActivity/AddActivity";
 
 const Activities = () => {
   const [activities, setActivities] = useState([
-    { key: 0, description: "a", tags: ["HEALTH"] },
-    { key: 1, description: "b", tags: ["FOOD", "LEARNING"] },
-    { key: 2, description: "c", tags: ["SHOW"] },
+    { key: 0, description: "a", tags: [{ key: 0, label: "HEALTH" }] },
+    { key: 1, description: "b", tags: [{ key: 1, label: "FOOD" }] },
+    { key: 2, description: "c", tags: [{ key: 2, label: "LEARNING" }] },
+  ]);
+  const [tags, setTags] = useState([
+    { key: 0, label: "HEALTH" },
+    { key: 1, label: "FOOD" },
+    { key: 2, label: "LEARNING" },
+    { key: 3, label: "SHOW" },
   ]);
 
   const [index, setIndex] = useState(activities.length);
@@ -25,9 +32,9 @@ const Activities = () => {
         .then((data) => {
           console.warn(data);
           let mappedData = [
-            { key: 0, description: "a", tags: ["HEALTH"] },
-            { key: 1, description: "b", tags: ["FOOD", "LEARNING"] },
-            { key: 2, description: "c", tags: ["SHOW"] },
+            { key: 0, description: "a", tags: [{ key: 0, label: "HEALTH" }] },
+            { key: 1, description: "b", tags: [{ key: 1, label: "FOOD" }] },
+            { key: 2, description: "c", tags: [{ key: 2, label: "LEARNING" }] },
           ];
           setActivities(mappedData);
         });
@@ -47,10 +54,18 @@ const Activities = () => {
     handleRemoveActivity(index);
   };
 
-  const handleAddActivity = () => {
+  const handleAddActivity = (event, activity, tags) => {
     setIndex(index + 1);
     let newActivities = [...activities];
-    newActivities.push({ key: index, description: "new" });
+    let newActivity = { key: index, description: activity, tags };
+    newActivities.push(newActivity);
+    fetch(`http://78.82.184.12:55502/activities`, {
+      body: JSON.stringify(newActivity),
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     setActivities(newActivities);
   };
 
@@ -70,13 +85,7 @@ const Activities = () => {
         spacing={3}
       >
         <Grid item>
-          <Button
-            onClick={handleAddActivity}
-            variant="contained"
-            color="primary"
-          >
-            Add activity
-          </Button>
+          <AddActivity handleAddActivity={handleAddActivity} tags={tags} />
         </Grid>
         <Grid item container alignItems="center" direction="column">
           {transitions.map(({ item, props, key }) => (

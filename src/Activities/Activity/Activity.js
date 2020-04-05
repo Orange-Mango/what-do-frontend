@@ -16,6 +16,7 @@ const useStyles = makeStyles({
   root: {
     minWidth: 275,
     width: "30%",
+    minHeight: "160px",
   },
 });
 
@@ -26,7 +27,6 @@ const Activity = ({ key, props, activity, removeActivity, likeActivity }) => {
       key={key}
       style={{
         ...props,
-        marginTop: `${activity.key * 20}px`,
         position: "absolute",
       }}
     >
@@ -37,16 +37,14 @@ const Activity = ({ key, props, activity, removeActivity, likeActivity }) => {
               className={classes.title}
               color="textSecondary"
               gutterBottom
-            >
-              {activity.tags && activity.tags[0]}
-            </Typography>
+            ></Typography>
 
             <Typography variant="body2" component="p">
               {activity.description}
             </Typography>
             {activity.tags &&
               activity.tags.map((tag) => (
-                <Chip size="small" label={`${tag}`} />
+                <Chip size="small" label={`${tag.label}`} />
               ))}
           </CardContent>
           <CardActions>

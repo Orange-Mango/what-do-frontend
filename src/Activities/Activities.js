@@ -5,6 +5,7 @@ import { useTransition } from "react-spring";
 import Activity from "./Activity/Activity";
 import storage from "../utils/storage";
 import AddActivity from "./AddActivity/AddActivity";
+import { client } from "../utils/api-client";
 
 const Activities = () => {
   const [activities, setActivities] = useState([
@@ -22,22 +23,16 @@ const Activities = () => {
   const [index, setIndex] = useState(activities.length);
 
   useEffect(() => {
-    function fetchData() {
+    async function fetchData() {
       let seenActivities = storage.getSeenActivities();
       let queryParams = seenActivities.map((id) => `not=${id}`).join("&");
-      fetch(`http://78.82.184.12:55502/activities/ordered?${queryParams}`)
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          console.warn(data);
-          let mappedData = [
-            { key: 0, description: "a", tags: [{ key: 0, label: "HEALTH" }] },
-            { key: 1, description: "b", tags: [{ key: 1, label: "FOOD" }] },
-            { key: 2, description: "c", tags: [{ key: 2, label: "LEARNING" }] },
-          ];
-          setActivities(mappedData);
-        });
+      let data = await client(`activities/ordered?${queryParams}`);
+      let mappedData = data.map(({ id, tags, description }) => ({
+        key: id,
+        tags: tags,
+        description: description,
+      }));
+      setActivities(mappedData);
     }
     fetchData();
   }, []);
@@ -54,18 +49,12 @@ const Activities = () => {
     handleRemoveActivity(index);
   };
 
-  const handleAddActivity = (event, activity, tags) => {
+  const handleAddActivity = (activity, tags) => {
     setIndex(index + 1);
     let newActivities = [...activities];
     let newActivity = { key: index, description: activity, tags };
     newActivities.push(newActivity);
-    fetch(`http://78.82.184.12:55502/activities`, {
-      body: JSON.stringify(newActivity),
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    client("activities", { body: newActivity });
     setActivities(newActivities);
   };
 

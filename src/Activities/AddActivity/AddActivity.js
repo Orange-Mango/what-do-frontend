@@ -33,7 +33,7 @@ const AddActivity = ({ handleAddActivity, tags }) => {
 
   const handleSubmit = (event, activity, tags) => {
     event.preventDefault();
-    handleAddActivity(event, activity, tags);
+    handleAddActivity(activity, tags);
     setSelectedTags([]);
     setOpen(false);
   };

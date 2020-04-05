@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Grid } from "@material-ui/core";
+import { Container, Grid, Typography } from "@material-ui/core";
 import { useTransition } from "react-spring";
 
 import Activity from "./Activity/Activity";
@@ -72,6 +72,27 @@ const Activities = () => {
         <Grid item>
           <AddActivity handleAddActivity={handleAddActivity} tags={tags} />
         </Grid>
+        <Grid
+          item
+          container
+          direction="column"
+          alignItems="center"
+          justify="center"
+          spacing={3}
+        >
+          <Grid item>
+            <Typography variant="h1" component="h12">
+              What do?
+            </Typography>
+          </Grid>
+
+          <Grid item>
+            <Typography variant="subtitle1" component="h6">
+              Good question, here's a list of activities you can do whilst
+              socially isolating 😎
+            </Typography>
+          </Grid>
+        </Grid>
         <Grid item container alignItems="center" direction="column">
           {transitions.map(({ item, props, key }) => (
             <Activity
@@ -89,7 +110,7 @@ const Activities = () => {
 };
 
 function sendLike(id) {
-  fetch(`http://localhost:5000/activities/${id}/like`, {
+  fetch(`http://78.82.184.12:55502/activities/${id}/like`, {
     method: "PUT",
   });
 }

@@ -4,6 +4,7 @@ import {
   Card,
   CardActions,
   CardContent,
+  CardHeader,
   Chip,
   Button,
   Grid,
@@ -15,7 +16,6 @@ const useStyles = makeStyles({
   root: {
     minWidth: 275,
     width: "30%",
-    minHeight: "160px",
   },
 });
 
@@ -30,6 +30,7 @@ const Activity = ({ props, activity, removeActivity, likeActivity }) => {
     >
       <Grid item>
         <Card className={classes.root}>
+          <CardHeader style={{ backgroundColor: "#3f51b5" }}></CardHeader>
           <CardContent>
             <Typography
               className={classes.title}
@@ -40,6 +41,7 @@ const Activity = ({ props, activity, removeActivity, likeActivity }) => {
             <Typography variant="body2" component="p">
               {activity.description}
             </Typography>
+            <br />
             {activity.tags &&
               activity.tags.map((tag) => (
                 <Chip size="small" label={`${tag.label}`} />
@@ -54,7 +56,7 @@ const Activity = ({ props, activity, removeActivity, likeActivity }) => {
               </Button>
               <Button onClick={() => likeActivity(activity.key)}>
                 <span role="img" aria-label="like">
-                  ❤️
+                  ✔️
                 </span>
               </Button>
             </Grid>

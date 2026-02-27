@@ -36,7 +36,7 @@
   "devDependencies": {
     "autoprefixer": "^9.7.5",
     "lodash": "^4.17.15",
-    "lodash-es": "^4.17.15",
+    "lodash-es": "^4.17.23",
     "postcss-cli": "^7.1.0",
     "react-spring": "^8.0.27",
     "react-use-gesture": "^7.0.9",
